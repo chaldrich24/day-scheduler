@@ -74,4 +74,8 @@ textarea{
   margin-top: 32px;
 }
 
+.container p {
+  margin-bottom: 0;
+}
+
 
