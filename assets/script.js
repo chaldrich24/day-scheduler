@@ -34,10 +34,15 @@ $(".task-holder").on("blur", "textarea", function() {
 });
 
 var saveTask = function(event) {
-    var task = $(".task-hour p").text();
     var taskHour = event.target.parentNode.id;
     var replace = false;
-    
+
+    if ($(event.target).is("span")) {
+        console.log("span");
+        taskHour = event.target.parentNode.parentNode.id;
+    }
+
+    var task = $("#" + taskHour + " .task-hour p").text();
     var taskObj = {"task": task, "taskHour": taskHour};
     
     for (i = 0; i < taskList.length; i++) {
@@ -66,6 +71,6 @@ var loadTasks = function() {
     }
 };
 
-
+loadTasks();
 
 $(".save-task").on("click", saveTask);
