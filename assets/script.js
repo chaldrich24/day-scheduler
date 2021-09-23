@@ -44,12 +44,13 @@ var saveTask = function(event) {
 
     var task = $("#" + taskHour + " .task-hour p").text();
     var taskObj = {"task": task, "taskHour": taskHour};
-    
-    for (i = 0; i < taskList.length; i++) {
-        if (taskList[i].taskHour === taskObj.taskHour) {
-            taskList.splice(i, 1);
-            taskList.push(taskObj);
-            replace = true;
+    if (taskList) {
+        for (i = 0; i < taskList.length; i++) {
+            if (taskList[i].taskHour === taskObj.taskHour) {
+                taskList.splice(i, 1);
+                taskList.push(taskObj);
+                replace = true;
+            }
         }
     }
 
@@ -61,10 +62,14 @@ var saveTask = function(event) {
 };
 
 var loadTasks = function() {
-    taskList = JSON.parse(localStorage.getItem("tasks"));
-    if (!taskList) {
+    if (localStorage.getItem("tasks") === null) {
         return false;
     }
+    
+    else {
+        taskList = JSON.parse(localStorage.getItem("tasks"));
+    }
+
     for (i = 0; i < taskList.length; i++) {
         var taskEl = $("#" + taskList[i].taskHour + " .task-hour p");
         taskEl.text(taskList[i].task)
