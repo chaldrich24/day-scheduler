@@ -1,6 +1,5 @@
 $("#currentDay").text(moment().format("dddd, MMMM Do YYYY, h:mm A"));
 var taskList = [];
-console.log($(".container"));
 
 $(".task-holder").on("click", ".task-hour", function() {
     $(this).removeClass("task-hour");
@@ -65,7 +64,7 @@ var loadTasks = function() {
     if (localStorage.getItem("tasks") === null) {
         return false;
     }
-    
+
     else {
         taskList = JSON.parse(localStorage.getItem("tasks"));
     }
@@ -79,3 +78,27 @@ var loadTasks = function() {
 loadTasks();
 
 $(".save-task").on("click", saveTask);
+
+var currentHour = moment().format("HH");
+currentHour = parseInt(currentHour);
+
+i = 9
+$(".container").children().each(function() {
+    $(this).attr("hour", i);
+
+    if (currentHour > $(this).attr("hour")) {
+        currentDiv = $(this).find(".task-hour");
+        currentDiv.addClass("bg-secondary border-dark border-bottom");
+    }
+    else if (currentHour === parseInt($(this).attr("hour"))) {
+        currentDiv = $(this).find(".task-hour");
+        currentDiv.addClass("bg-danger border-dark border-bottom");
+    }
+    else if (currentHour < $(this).attr("hour")) {
+        currentDiv = $(this).find(".task-hour");
+        currentDiv.addClass("bg-success border-dark border-bottom");
+    }
+    i++;
+});
+
+
